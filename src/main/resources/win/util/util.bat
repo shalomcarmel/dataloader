@@ -13,7 +13,12 @@ EXIT /b %ERRORLEVEL%
     SET MIN_JAVA_VERSION=17
 	rem Set ClassPath for headless win32 compatibility
     set SWT_VERSION=4.36
-    set DATALOADER_HEADLESS_CP=swtwin32_x86_64-%SWT_VERSION%.jar;dataloader-%DATALOADER_VERSION%.jar
+    if /i "%PROCESSOR_ARCHITECTURE%"=="ARM64" (
+        set "SWT_JAR=swtwin32_aarch64-%SWT_VERSION%.jar"
+    ) else (
+        set "SWT_JAR=swtwin32_x86_64-%SWT_VERSION%.jar"
+    )
+    set DATALOADER_HEADLESS_CP=%SWT_JAR%;dataloader-%DATALOADER_VERSION%.jar
     EXIT /b 0
 
 :checkJavaVersion
